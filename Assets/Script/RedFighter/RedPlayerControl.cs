@@ -27,7 +27,7 @@ public class RedPlayerControl : PlayerControler
         return closestFighter;
     }
 
-    // Implement abstract method for red player's attack animation
+    
     public override void OnAttackAnimation()
     {
         if (aiDestination.target != null)
@@ -35,7 +35,8 @@ public class RedPlayerControl : PlayerControler
             BluePlayerControl bluePlayerControl = aiDestination.target.GetComponent<BluePlayerControl>();
             if (bluePlayerControl != null)
             {
-                bluePlayerControl.health -= damage;
+                
+                bluePlayerControl.PlayerHealth(damage);
             }
         }
     }

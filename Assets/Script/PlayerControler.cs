@@ -8,11 +8,19 @@ public abstract class PlayerControler : MonoBehaviour
     [SerializeField] protected float stopDistance = 2f;
     [SerializeField] protected float attackDistance = 2f;
     [SerializeField] protected int damage;
+    [SerializeField] protected int maxHealth;
+    [SerializeField] protected SliderControl sliderControl;
 
-    public int health;
+    protected int currentHealth;
+
+    
 
     protected abstract GameObject FindClosestEnemyFighter(Vector3 position);
 
+    protected virtual void Start()
+    {
+        currentHealth = maxHealth;
+    }
     protected virtual void Update()
     {
         GameObject closestEnemyFighter = FindClosestEnemyFighter(transform.position);
@@ -43,12 +51,17 @@ public abstract class PlayerControler : MonoBehaviour
 
     protected virtual void PlayerDeath()
     {
-        if (health <= 0)
+        if (currentHealth<= 0)
         {
             DestroyPlayer();
         }
     }
 
+    public virtual void PlayerHealth(int damage)
+    {
+        currentHealth -= damage;
+        sliderControl.UpdateHealthBar(currentHealth, maxHealth);
+    }
     protected virtual void DestroyPlayer()
     {
         Destroy(gameObject);
